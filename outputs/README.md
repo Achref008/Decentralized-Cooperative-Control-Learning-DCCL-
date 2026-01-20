@@ -39,4 +39,4 @@ Note: **The Line Chart** proves the **System Stability**: It shows that your dec
 
 ---
 
-Note: **The Bar Chart** proves the **Model Fairness**: It shows that no single node is left behind with bad performance; the "Global Brain" helps every node reach a similar level of accuracy.
+**Note**: **The Bar Chart** **proves the** **Model Fairness**: **It shows that no single node is left behind with bad performance**; **the "Global Brain"** **helps every node reach a similar level of accuracy**.
