@@ -82,7 +82,7 @@ tests/
 *   **Frameworks:** TensorFlow / Keras
 *   **Distributed Comms:** ZeroMQ (ZMQ)
 *   **Optimization:** Keras Tuner (Hyperband)
-*   **Transfer Learning:** Centralized pre-training and weight initialization to accelerate decentralized convergence.
+*   **Transfer Learning:** Huber Loss pre-training & Weight Initialization (Keras).
 *   **Data Science:** NumPy, Pandas, Scikit-learn
 *   **DevOps/QA:** PyTest (Asynchronous networking tests)
 ---
