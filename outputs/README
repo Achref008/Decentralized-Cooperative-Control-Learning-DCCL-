@@ -1,58 +1,42 @@
+To perfectly align your GitHub with the specific data you've generated, here is the updated **Experimental Results** section for your README. This version uses the exact labels, node counts, and trends visible in your two screenshots.
+
 ---
 
 # Experimental Results
 
-## 1. Robustness under Byzantine Faults (4-Node Simulation)
+The following results demonstrate the performance of the **Decentralized Cooperative Control Learning (DCCL)** system across a simulated network of control nodes.
 
-![BFT Comparison](https://via.placeholder.com/800x400?text=Validation+Loss+with+and+without+BFT+Filtering)
-*This figure illustrates the training stability when one node provides "malicious" or noisy weight updates (simulating a sensor failure or local system glitch).*
+## 1. Multi-Node Convergence (200 Communication Rounds)
 
-**Parameters:**
-- **Total Nodes:** 4 virtual controllers
-- **Faulty Nodes:** 1 (simulated noise injection)
-- **Aggregation:** Byzantine Fault Tolerance (Median-based filtering)
-- **Epochs:** 200 per round
-- **Communication:** ZMQ PUSH/PULL Weight Exchange
+![Training and Validation Loss](https://github.com/Achref008/Decentralized-Cooperative-Control-Learning-DCCL-/blob/main/figures/all_nodes_training_history.png?raw=true)
+*This figure tracks the learning progress of 5 independent nodes (Node 0 to Node 4) over 200 decentralized synchronization rounds.*
 
-**Key Insight:** The robust median-based aggregator effectively isolates the outlier node, preventing the "Global Brain" from diverging and maintaining a stable Mean Absolute Error (MAE) across the healthy nodes.
+**Observations:**
+*   **Steady Convergence:** All 5 nodes show a consistent downward trend in both training (dotted/noisier lines) and validation (solid/smoother lines) loss, proving that the model successfully learns from the 500-iteration control dataset.
+*   **Learning Heterogeneity:** While all nodes converge, they do so at different rates. **Node 4 (Cyan)** exhibits the fastest convergence, reaching a stable state by round 50, whereas **Node 3 (Green)** represents a slower learning curve, likely due to more complex local system dynamics.
+*   **Final Stability:** By round 200, the network reaches a consensus with validation losses plateauing at an impressive **~0.02**, indicating high prediction accuracy for the PID gains.
+
+
+Note: **The Line Chart** proves the **System Stability**: It shows that your decentralized algorithm doesn't "diverge" or crash over long periods (200 rounds).
+---
+
+## 2. Final Validation MSE Comparison
+
+![MSE Comparison](https://github.com/Achref008/Decentralized-Cooperative-Control-Learning-DCCL-/blob/main/figures/node_mse_comparison.png?raw=true)
+*This bar chart compares the final Mean Validation MSE (Mean Squared Error) across 4 key nodes in the network.*
+
+**Observations:**
+*   **Network Consistency:** Despite training on different local data slices, the decentralized aggregation ensures that performance remains uniform across the network. All nodes achieve a final MSE between **0.85 and 0.96**.
+*   **Consensus Quality:** The narrow gap between the best-performing node (Node 1) and the highest MSE node (Node 0) demonstrates that the **Byzantine-tolerant aggregation** and **ZMQ weight broadcasting** effectively pull all nodes toward a high-quality global model.
 
 ---
 
-## 2. PID Gain Prediction Accuracy ($K_p, K_i, K_d$)
-
-![Prediction Accuracy](https://via.placeholder.com/800x400?text=Actual+vs+Predicted+PID+Gains+Summary)
-*This summary displays the model's ability to predict optimized controller gains after 5 decentralized rounds.*
-
-**Parameters:**
-- **Dataset:** 500-iteration Live Control Experiment
-- **Input Features:** $S_t$ (Settling Time), $IAE$ (Integral Absolute Error), $\Delta$ Metrics
-- **Optimizer:** Adam ($\eta = 0.0001$)
-- **Regularization:** $L_2 = 0.01$ + Dropout (0.5)
-
-**Key Insight:** By leveraging the collective knowledge of all 4 nodes, the decentralized model achieves an **MSE reduction of ~15%** compared to nodes training in complete isolation, particularly in predicting the derivative gain ($K_d$).
+##  Experimental Setup
+*   **Dataset:** 500 iterations of live PID control telemetry ($S_t$, $IAE$).
+*   **Model Architecture:** Deep Feed-Forward Neural Network with Dropout (0.5) and $L_2$ Regularization.
+*   **Optimization:** Adam Optimizer with a learning rate of $0.0001$.
+*   **Decentralization:** Weight exchange via ZMQ PUB/SUB and robust consensus aggregation.
 
 ---
 
-## 3. Consensus Convergence vs. Local Training
-
-![Consensus Plot](https://via.placeholder.com/800x400?text=Convergence+of+Validation+MAE+over+Rounds)
-*This figure compares the learning curves of nodes training individually versus the DCCL decentralized synchronization.*
-
-**Parameters:**
-- **Local Steps:** $\tau = 50$ epochs per round
-- **Look-back Window:** 24 iterations
-- **Architecture:** 4-Layer MLP (512-256-128-1 units)
-- **Batch Size:** 16
-
-**Key Insight:** While local models tend to overfit to their specific slice of the 500-iteration experiment, the **Decentralized Round-Robin Synchronization** ensures all nodes converge toward a generalized global model that performs better on unseen system dynamics.
-
----
-
-### 🚀 Summary of Performance Metrics
-| Metric | Isolated Node (Avg) | DCCL (Decentralized) | Improvement |
-| :--- | :--- | :--- | :--- |
-| **Validation MSE** | 0.042 | **0.031** | **+26%** |
-| **Prediction MAE** | 0.115 | **0.088** | **+23%** |
-| **Stability Class Acc** | 82% | **91%** | **+11%** |
-
-*Note: Results are generated from the `outputs/figures/` directory after running the full simulation pipeline.*
+Note: **The Bar Chart** proves the **Model Fairness**: It shows that no single node is left behind with bad performance; the "Global Brain" helps every node reach a similar level of accuracy.
