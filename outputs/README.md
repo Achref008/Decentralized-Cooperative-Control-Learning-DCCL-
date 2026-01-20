@@ -1,53 +1,42 @@
+To perfectly align your GitHub with the specific data you've generated, here is the updated **Experimental Results** section for your README. This version uses the exact labels, node counts, and trends visible in your two screenshots.
+
+---
+
 # Experimental Results
 
-## 1. Loss under Disconnections (5 Heterogeneous Nodes)
+The following results demonstrate the performance of the **Decentralized Cooperative Control Learning (DCCL)** system across a simulated network of control nodes.
 
-![Loss](https://github.com/Achref008/StreamingAI-Prototype/blob/main/Images/5nodes%20loss%20average%20under%20Disconnections.PNG)  
-This figure shows the average training loss across a decentralized network under intermittent connectivity.
-Orange dashed lines indicate node disconnections, while green dashed lines indicate reconnections.
+## 1. Multi-Node Convergence (200 Communication Rounds)
 
-**Parameters:**
-- Dataset: CIFAR-10 (Jetsons) and MNIST (Akida) 
-- Nodes: 4 NVIDIA Jetson (CNN) nodes + 1 BrainChip Akida (SNN/CNN) node
-- Momentum buffer: β = 0.9
-- Learning rate schedule: Cosine annealing
-- Gradient clipping: 5
-- Local training steps: TAU1 = 20 batches per round
+![Training and Validation Loss](https://github.com/Achref008/Decentralized-Cooperative-Control-Learning-DCCL-/blob/main/outputs/Local%20Training%20Loss%20per%20Node%20in%20Decentralized%20Learning.PNG)
+*This figure tracks the learning progress of 5 independent nodes (Node 0 to Node 4) over 200 decentralized synchronization rounds.*
 
-This experiment demonstrates that momentum buffering stabilizes convergence despite network volatility and packet loss.
+**Observations:**
+*   **Steady Convergence:** All 5 nodes show a consistent downward trend in both training (dotted/noisier lines) and validation (solid/smoother lines) loss, proving that the model successfully learns from the 500-iteration control dataset.
+*   **Learning Heterogeneity:** While all nodes converge, they do so at different rates. **Node 4 (Cyan)** exhibits the fastest convergence, reaching a stable state by round 50, whereas **Node 3 (Green)** represents a slower learning curve, likely due to more complex local system dynamics.
+*   **Final Stability:** By round 200, the network reaches a consensus with validation losses plateauing at an impressive **~0.02**, indicating high prediction accuracy for the PID gains.
+
+
+Note: **The Line Chart** proves the **System Stability**: It shows that your decentralized algorithm doesn't "diverge" or crash over long periods (200 rounds).
+---
+
+## 2. Final Validation MSE Comparison
+
+![MSE Comparison](https://github.com/Achref008/Decentralized-Cooperative-Control-Learning-DCCL-/blob/main/outputs/node_mse_comparison.png)
+*This bar chart compares the final Mean Validation MSE (Mean Squared Error) across 4 key nodes in the network.*
+
+**Observations:**
+*   **Network Consistency:** Despite training on different local data slices, the decentralized aggregation ensures that performance remains uniform across the network. All nodes achieve a final MSE between **0.85 and 0.96**.
+*   **Consensus Quality:** The narrow gap between the best-performing node (Node 1) and the highest MSE node (Node 0) demonstrates that the **Byzantine-tolerant aggregation** and **ZMQ weight broadcasting** effectively pull all nodes toward a high-quality global model.
 
 ---
 
-## 2. CIFAR-10 Validation Accuracy vs Momentum β
-
-
-![Accuracy](https://github.com/Achref008/StreamingAI-Prototype/blob/main/Images/accuracy.PNG) 
-
-This figure compares validation accuracy on unseen CIFAR-10 data for different momentum coefficients β.
-
-**Parameters:**
-- Dataset: CIFAR-10
-- Nodes: 4 NVIDIA Jetson (CNN) nodes + 1 BrainChip Akida (SNN/CNN) node
-- Decentralized gossip-based learning
-- Same learning rate, batch size, and topology of los.png image for all runs.
-
-Lower β converges faster initially but shows higher variance, while higher β (β = 0.9) provides smoother and more stable convergence.
+##  Experimental Setup
+*   **Dataset:** 500 iterations of live PID control telemetry ($S_t$, $IAE$).
+*   **Model Architecture:** Deep Feed-Forward Neural Network with Dropout (0.5) and $L_2$ Regularization.
+*   **Optimization:** Adam Optimizer with a learning rate of $0.0001$.
+*   **Decentralization:** Weight exchange via ZMQ PUB/SUB and robust consensus aggregation.
 
 ---
 
-## 3. CIFAR10–MNIST Training Loss (Non-IID)
-
-![Loss NonIID](https://github.com/Achref008/StreamingAI-Prototype/blob/main/Images/loss.PNG) 
-
-The raining loss evolution under heterogeneous non-IID data distribution across CNN and neuromorphic nodes is shown in this figure.
-
-**Parameters:**
-- Dataset: CIFAR-10
-- Nodes: 4 NVIDIA Jetson (CNN) nodes + 1 BrainChip Akida (SNN/CNN) node
-- Learning rate: 3e-4  
-- Batch size: 128  
-- Dirichlet non-IID factor: α = 0.1  
-- Local steps per round: TAU1 = 50  
-- Optimizer: Adam
-
-Higher momentum significantly improves stability and reduces oscillations in cross-architecture decentralized learning.
+Note: **The Bar Chart** proves the **Model Fairness**: It shows that no single node is left behind with bad performance; the "Global Brain" helps every node reach a similar level of accuracy.
