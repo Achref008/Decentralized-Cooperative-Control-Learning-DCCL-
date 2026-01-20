@@ -21,7 +21,7 @@ data/pid_dataset.xlsx
 This dataset must contain at least these columns:
 
 ```text
-Iteration | Kp[1-4] | Ki[1-4] | Kd[1-4] | St[1-4] | IAE[1-4]
+Iteration | Kp[1->4] | Ki[1->4] | Kd[1->4] | St[1->4] | IAE[1->4]
 
 ```
 *   **Iteration:** The chronological step of the live experiment(500 in pid_dataset.xlsx).
