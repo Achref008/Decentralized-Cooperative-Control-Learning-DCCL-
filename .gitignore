@@ -1,1 +1,33 @@
+# Python bytecode
+__pycache__/
+*.py[cod]
+*$py.class
 
+# Virtual Environments
+venv/
+.venv/
+env/
+
+# IDE Settings
+.vscode/
+.idea/
+*.swp
+
+# ML Artifacts & Training Outputs
+# We ignore these so your GitHub only contains the clean code
+checkpoints/
+artifacts/
+tuner_results/
+tuner_logs/
+logs/
+outputs/
+figures/
+
+# Data
+# Note: Usually we keep the data/ directory structure but ignore large files
+# If you want to include your pid_dataset.xlsx, comment out the line below
+# data/*.xlsx
+
+# OS generated files
+.DS_Store
+Thumbs.db
