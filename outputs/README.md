@@ -1,5 +1,3 @@
----
-
 # Experimental Results
 
 The following results demonstrate the performance of the **Decentralized Cooperative Control Learning (DCCL)** system across a simulated network of control nodes.
