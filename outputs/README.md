@@ -1,5 +1,3 @@
-To perfectly align your GitHub with the specific data you've generated, here is the updated **Experimental Results** section for your README. This version uses the exact labels, node counts, and trends visible in your two screenshots.
-
 ---
 
 # Experimental Results
